@@ -10,25 +10,29 @@ project(GTKUtils)
 find_package(GTK REQUIRED gtk)
 
 
-add_library(GTKUtils STATIC
+add_library(GTKUtil STATIC
     include/GTKUtils.h
     gtkUtils/GTKUtils.cpp
 )
 
-target_link_libraries(GTKUtils PUBLIC
+target_link_libraries(GTKUtil PUBLIC
     ${GTK_LIBRARIES}
 )
 
-target_include_directories(GTKUtils PUBLIC
+target_include_directories(GTKUtil PUBLIC
     $<BUILD_INTERFACE:${GTKUtils_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
     ${GTK_INCLUDE_DIR}
 )
 
+set_property(TARGET GTKUtil PROPERTY PUBLIC_HEADER
+    ${GTKUtils_SOURCE_DIR}/include/GTKUtils.h
+)
+
 #
 # Installation instructions
 #
-install(TARGETS       GTKUtils
+install(TARGETS       GTKUtil
         EXPORT        GTKUtilsTargets
         ARCHIVE       DESTINATION lib
         INCLUDES      DESTINATION include
@@ -50,7 +54,7 @@ write_basic_package_version_file("GTKUtilsConfigVersion.cmake"
     COMPATIBILITY SameMajorVersion
 )
 install (
-    FILES       ${CEFBaseApp_BINARY_DIR}/GTKUtilsConfigVersion.cmake
+    FILES       ${GTKUtils_BINARY_DIR}/GTKUtilsConfigVersion.cmake
     DESTINATION lib/cmake/GTKUtils
 )
 
